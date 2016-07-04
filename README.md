@@ -14,15 +14,24 @@ Don't forget to add the C:\Python27\ in your PATH environment variable.
 6. "..._output.gpx" files are created
 7. Import the "..._output.gpx" files in Strava: https://www.strava.com/upload/select
 
-# Optional feature
-You can specify the gap
+# Advanced and Optional feature
+.gpx files are composed of track points (trkpt) recorded by your device (phone, watch,...)
+For each trkpt the below information is recorded:
+- latitude (lat)
+- longitude (lon)
+- time
+- altitude (ele)
 
+From my understanding, the high difference between the "Moving Time" and the "Elapsed Time" is due to bad GPS signal. It is thus required to correct the .gpx file:
+1. The script deletes the records (trkpt) that are too close to each other. 
+2. The script then inserts records to have at least one record every two seconds.
 
-The script first delete trkpt (track point) when they are too close to each other
-trkpt[i] is deleted if:
-|lat[i+1]-lat[i]|<gap and |lon[i+1]-lon[i]|<gap
+The "gap" value defines how close are two trkpt. To simplify, if the distance between two trkpt is inferior to the gap value, one of the trkpt is deleted. You can specify the gap argument. The smaller is the gap, the more records are deleted. 
+By default, gap = 0,00017. This value was the best working for me.
+From what I have experienced, the gap value must be superior to 0,00001 and inferior to 0,0002.
 
-You can specify the gap value as the 1st argument of the script.
-For example, to run the script : run the command: 
+You can specify the gap value as the 1st argument when running the script.
+For example, run this command in the command prompt: GPX_Correct.py 0.0002
+
 
 
