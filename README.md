@@ -1,4 +1,3 @@
-# Purpose
 GPX_Correct.py corrects .gpx files imported from Runtastic so that "Moving Time" is closer to "Elapsed Time" when exporting them to Strava.
 
 # Requirements
