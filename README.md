@@ -23,6 +23,7 @@ For each trkpt the below information is recorded:
 - altitude (ele)
 
 From my understanding, the high difference between the "Moving Time" and the "Elapsed Time" is due to bad GPS signal. It is thus required to correct the .gpx file:
+
 1. The script deletes the records (trkpt) that are too close to each other. 
 2. The script then inserts records to have at least one record every two seconds.
 
