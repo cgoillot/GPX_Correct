@@ -17,6 +17,7 @@ Don't forget to add C:\Python27\ in your PATH environment variable.
 (try if not satisfied with default value)
 
 .gpx files are composed of track points (trkpt) recorded by your device (phone, watch,...)
+
 For each trkpt the below information is recorded:
 - latitude (lat)
 - longitude (lon)
