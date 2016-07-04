@@ -1,11 +1,11 @@
-# GPX Correct
-This script corrects .gpx files imported from Runtastic so that "Moving Time" is closer to "Elapsed Time" when exporting them in Strava.
+# Purpose
+This script corrects .gpx files imported from Runtastic so that "Moving Time" is closer to "Elapsed Time" when exporting them to Strava.
 
 # Requirements
 Python 2.7 (not tested with other versions at the moment) must be set up for running this script. Below is a tutorial to set up Python.
 Don't forget to add the C:\Python27\ in your PATH environment variable.
 
-# How to use the script
+# How to use it?
 1. Download and install Python on your computer
 2. Download one or more .gpx files from Runtastic
 3. Download the script "GPX_Correct.py"
@@ -14,7 +14,7 @@ Don't forget to add the C:\Python27\ in your PATH environment variable.
 6. "..._output.gpx" files are created
 7. Import the "..._output.gpx" files in Strava: https://www.strava.com/upload/select
 
-# Advanced and Optional feature
+# Optional argument
 .gpx files are composed of track points (trkpt) recorded by your device (phone, watch,...)
 For each trkpt the below information is recorded:
 - latitude (lat)
