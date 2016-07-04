@@ -13,7 +13,9 @@ Don't forget to add C:\Python27\ in your PATH environment variable.
 6. "..._output.gpx" files are created
 7. Import the "..._output.gpx" files in Strava: https://www.strava.com/upload/select
 
-# Optional argument (try if not satisfied with default value)
+# Optional argument 
+(try if not satisfied with default value)
+
 .gpx files are composed of track points (trkpt) recorded by your device (phone, watch,...)
 For each trkpt the below information is recorded:
 - latitude (lat)
