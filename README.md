@@ -6,10 +6,10 @@ Don't forget to add C:\Python27\ in your PATH environment variable.
 
 # How to use it?
 1. Download and install Python on your computer
-2. Download the .gpx files from Runtastic
+2. Download the .gpx files from Runtastic/Strava
 3. Download "Runtastic_GPX_Correct.py" and/or "Strava_GPX_Correct.py"
-4. Gather your .gpx files with the "GPX_Correct.py" in the same folder
-5. Double click the GPX_Correct.py or run it from the Command Prompt
+4. Gather your .gpx files from Runtastic/Strava with the "Runtastic_GPX_Correct.py" or "Strava_GPX_Correct" in the same folder
+5. Double click the Runtastic_GPX_Correct.py or Strava_GPX_Correct or run it from the Command Prompt
 6. "..._output.gpx" files are created
 7. Import the "..._output.gpx" files in Strava: https://www.strava.com/upload/select
 
