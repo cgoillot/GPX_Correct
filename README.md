@@ -35,3 +35,6 @@ From what I have experienced, the gap value must be superior to 0,00001 and infe
 
 You can specify the gap value as the 1st argument when running the script.
 For example, run this command in the command prompt: GPX_Correct.py 0.0002
+
+# Support
+Please feel free to send an email to this address for feedback/support: gpx.correct@gmail.com
