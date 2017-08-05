@@ -7,7 +7,8 @@ Python 2.7 (not tested with other versions at the moment) is required.
 Don't forget to add C:\Python27\ in your PATH environment variable.
 
 # How to use it?
-1. Download and install Python on your computer
+1. Download and install Python on your computer: https://www.python.org/download/releases/2.7/
+Note: A bugfix release, 2.7.13, is currently available. Its use is recommended.
 2. Download the .gpx files from Runtastic/Strava
 3. Download "GPX_Correct.py"
 4. Gather your .gpx files from Runtastic/Strava with the corresponding GPX_Correct.py in the same folder
