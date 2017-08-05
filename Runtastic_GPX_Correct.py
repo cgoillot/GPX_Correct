@@ -1,3 +1,4 @@
+#!/usr/bin/python2.7
 # GPX_Correct.py corrects .gpx files imported from Runtastic so that "Moving Time" is closer to "Elapsed Time" when exporting them to Strava.
 
  # Requirements
@@ -30,7 +31,7 @@
 # 2. GPX_Correct inserts records to have at least one record every two seconds.
 
 # The "gap" value defines how close are two trkpt. If the distance between two trkpt is inferior to the gap value, one of the trkpt is deleted. You can specify the gap argument. The smaller the gap is, the more records will be deleted. 
-# By default, gap = 0,00017.
+# By default, gap = 0.
 # From what I have experienced, the gap value must be superior to 0,00001 and inferior to 0,0002.
 
 # You can specify the gap value as the 1st argument when running the script.
@@ -54,11 +55,11 @@ def TimeCorrect(f,output,gap):
 		j+=1
 
 	del number[len(number)-1]
+	
+	print(Decimal(lat[1]))
 
 	for i in range(0, len(lat)-1):
-		if Decimal(lat[i] - lat[i+1])>gap:
-			number[i] = int(-1)
-		elif Decimal(lon[i] - lon[i+1])>gap:
+		if (abs(Decimal(lat[i] - lat[i+1]))>Decimal(gap) or abs(Decimal(lon[i] - lon[i+1]))>Decimal(gap)):
 			number[i] = int(-1)
 
 	for trk in root:
@@ -71,7 +72,7 @@ def TimeCorrect(f,output,gap):
 						sup+=1
 					else:
 						y+=1
-	print 'number of trkpt cleaned:', sup
+	print('number of trkpt cleaned:', sup)
 	tree.write(output)
 
 def SpeedCorrect(f):
@@ -83,7 +84,7 @@ def SpeedCorrect(f):
 	lat = []
 	lon = []
 	number = []
-	ref1 = datetime.strptime('2', '%S')
+	ref1 = datetime.strptime('5', '%S')
 	ref0 = datetime.strptime('0', '%S')
 	ref = ref1 - ref0
 	i=0
@@ -91,36 +92,28 @@ def SpeedCorrect(f):
 	insertion = 0
 	
 	for elem2 in iterator2:
-		t.append(datetime.strptime(elem2.text, '%Y-%m-%dT%H:%M:%SZ'))
-
-	del t[0]
+		t.append(datetime.strptime(elem2.text, '%Y-%m-%dT%H:%M:%S.%fZ'))
 
 	for elem1 in iterator1:
 		lat.append(Decimal(elem1.get('lat')))
 		lon.append(Decimal(elem1.get('lon')))
 		number.append(int(0))
 	
-	print "initial number of trkpt: ", len(number)
+	print("initial number of trkpt: ", len(number))
 	
-	while i<len(t)-1:
+	while i<len(t)-2:
 		delta = t[i+1]-t[i]
-		if delta > ref:
+		if  delta > ref:
 			newlat = lat[i]+(lat[i+1]-lat[i])/2
 			newlon = lon[i]+(lon[i+1]-lon[i])/2
 			t.insert(i+1,t[i]+delta/2)
 			lat.insert(i+1,newlat)
 			lon.insert(i+1,newlon)
 			number.insert(i+1,1)
-			#number[i]+=1
 		else:
 			i+=1
 	
-	# for i in range (0, len(t)-1):
-		# print 'lat ', i, lat[i], '< lat ', i+1, lat[i+1]
-		# print 't ', i, t[i], '< t ', i+1, t[i+1]
-	
-	print "new trkpt inserted: ", sum(number)
-	
+	print("new trkpt inserted: ", sum(number))
 		
 	trk = root.find('{http://www.topografix.com/GPX/1/1}trk')
 	trkseg = trk.find('{http://www.topografix.com/GPX/1/1}trkseg')
@@ -129,28 +122,26 @@ def SpeedCorrect(f):
 		if number[i]>0:
 			trkseg.insert(0,trkpt)
 			insertion+=1
-	
-	
 	y=0
-	#print "nombre d'insertions effectuees", insertion
 	
 	tree.write(f)
-	
 	tree = ET.parse(f)
 	root = tree.getroot()
 	
 	trackpoint = 0
-	for trk in root:
-		for trkseq in trk:
-			for trkpt in trkseq.findall('{http://www.topografix.com/GPX/1/1}trkpt'):
-				trkpt.set('lat', str(lat[y]))
-				trkpt.set('lon', str(lon[y]))
-				trkpt.find('{http://www.topografix.com/GPX/1/1}time').text = t[y].strftime('%Y-%m-%dT%H:%M:%S.000Z')
-				y+=1
-				trackpoint+=1
-	print "final number of trkpt: ", trackpoint
-					
-	tree = ET.parse(f)
+	
+	for trkpt in tree.iter(tag='{http://www.topografix.com/GPX/1/1}trkpt'):
+		trkpt.set('lat',str(lat[y]))
+		trkpt.set('lon',str(lon[y]))
+		y+=1
+	j=0
+	
+	for time in tree.iter(tag='{http://www.topografix.com/GPX/1/1}time'):
+		newtime=t[j].strftime('%Y-%m-%dT%H:%M:%S.000Z')
+		time.text=str(newtime)
+		j+=1
+	
+	tree.write(f)
 
 
 if __name__ == '__main__':
@@ -172,7 +163,7 @@ if __name__ == '__main__':
 		elif file.endswith(".py"):
 			pass
 		else:
-			print "This file is not a gpx file: ", file
+			print("This file is not a gpx file: ", file)
 	
 	ET.register_namespace('', "http://www.topografix.com/GPX/1/1")
 	
@@ -182,25 +173,25 @@ if __name__ == '__main__':
 				for i in range (0,len(listfile)):
 					filename=listfile[i].rstrip(listfile[i][-4:])
 					newfilename = filename + "_output.gpx"
-					print "Correcting", filename
+					print("Correcting", filename)
 					TimeCorrect(listfile[i], newfilename, Decimal(sys.argv[1]))
 					SpeedCorrect(newfilename)
-					print filename, "has been corrected --> ", newfilename, "\n"
+					print(filename, "has been corrected --> ", newfilename, "\n")
 			else:
-				print "argv1 must be a float type; not used"
+				print("argv1 must be a float type < 0.001 ; 0 used instead for gap value")
 		else:
 			for i in range (0,len(listfile)):
 				filename=listfile[i].rstrip(listfile[i][-4:])
 				newfilename = filename + "_output.gpx"
-				print "Correcting", filename
-				TimeCorrect(listfile[i], newfilename, 0.00017)
+				print("Correcting", filename)
+				TimeCorrect(listfile[i], newfilename, 0)
 				SpeedCorrect(newfilename)
-				print filename, "has been corrected --> ", newfilename, "\n"
+				print(filename, "has been corrected --> ", newfilename, "\n")
 	else:
-		print "no .gpx files in this folder; insert .gpx files in this folder to correct them"
+		print("no .gpx files in this folder; insert .gpx files in this folder to correct them")
 
 	if len(outputfile)>0:
-		print "These files have already been corrected (remove _output.gpx): "
+		print("These files have already been corrected (remove _output.gpx): ")
 		for i in range(0, len(outputfile)):
-			print outputfile[i]
+			print(outputfile[i])
 		

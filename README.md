@@ -32,10 +32,10 @@ For each trkpt the below information is recorded:
 The high difference between the "Moving Time" and the "Elapsed Time" is due to bad GPS signal.
 
 1. GPX_Correct deletes the records (trkpt) that are too close to each other. 
-2. GPX_Correct inserts records to have at least one record every two seconds.
+2. GPX_Correct inserts records to have at least one record every five seconds.
 
 The "gap" value defines how close are two trkpt. If the distance between two trkpt is inferior to the gap value, one of the trkpt is deleted. You can specify the gap argument. The smaller the gap is, the more records will be deleted. 
-By default, gap = 0,00017.
+By default, gap = 0,0.
 From what I have experienced, the gap value must be superior to 0,00001 and inferior to 0,0002.
 
 You can specify the gap value as the 1st argument when running the script.
