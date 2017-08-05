@@ -11,8 +11,8 @@
 # 3. Download "GPX_Correct.py"
 # 4. Gather your .gpx files with the "GPX_Correct.py" in the same folder
 # 5. Double click the GPX_Correct.py or run it from the Command Prompt
-# 6. "..._output.gpx" files are created
-# 7. Import the "..._output.gpx" files in Strava: https://www.strava.com/upload/select
+# 6. "Output_ExistingFileName.gpx" files are created
+# 7. Import the "Output_ExistingFileName.gpx" files in Strava: https://www.strava.com/upload/select
 
  # Optional argument 
 # (try if not satisfied with default value)
@@ -53,10 +53,8 @@ def TimeCorrect(f,output,gap):
 		lon.append(Decimal(elem1.get('lon')))
 		number.append(j)
 		j+=1
-
-	del number[len(number)-1]
-	
-	print(Decimal(lat[1]))
+	if (len(number) != 0):
+		del number[len(number)-1]
 
 	for i in range(0, len(lat)-1):
 		if (abs(Decimal(lat[i] - lat[i+1]))>Decimal(gap) or abs(Decimal(lon[i] - lon[i+1]))>Decimal(gap)):
@@ -160,14 +158,14 @@ if __name__ == '__main__':
 	outputfile=[]
 
 	for file in os.listdir(os.path.dirname(os.path.abspath(__file__))):
-		if file.endswith("output.gpx"):
+		if file.startswith("Output_"):
 			outputfile.append(file)
 		elif file.endswith(".gpx"):
 			listfile.append(file)
 		elif file.endswith(".py"):
 			pass
 		else:
-			print("This file is not a gpx file: ", file)
+			print("The file", file, "is not a gpx file, it hasn't been modified")
 	
 	ET.register_namespace('', "http://www.topografix.com/GPX/1/1")
 	
