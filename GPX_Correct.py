@@ -91,7 +91,7 @@ def SpeedCorrect(f):
 	
 	if ("Runtastic" in (root.get('creator'))):
 		for elem2 in iterator2:
-			t.append(datetime.strptime(elem2.text, '%Y-%m-%dT%H:%M:%SZ'))
+			t.append(datetime.strptime(elem2.text, '%Y-%m-%dT%H:%M:%S.%fZ'))
 	elif ("Strava" in (root.get('creator'))):
 		for elem2 in iterator2:
 			t.append(datetime.strptime(elem2.text, '%Y-%m-%dT%H:%M:%SZ'))
